@@ -127,7 +127,7 @@ input, select, textarea {
 		@media screen and (max-width: 1920px) {
 
 			html {
-				font-size: 13pt;
+				font-size: 18pt;
 			}
 
 		}
@@ -165,7 +165,7 @@ input, select, textarea {
 		color: #000000;
 		font-family: "Source Sans Pro", Helvetica, sans-serif;
 		font-size: 1rem;
-		font-weight: 300;
+		font-weight: 600;
 		letter-spacing: 0.0375em;
 		line-height: 2;
 	}
