@@ -1,0 +1,56 @@
+==================================================================
+https://keybase.io/betsegaw
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of https://finalid.org
+  * I am betsegaw (https://keybase.io/betsegaw) on keybase.
+  * I have a public key ASAeDEJ-ngKJW8OwUhTlvwBppNrqY2lrDNIdKJup9E4L4Ao
+
+To do so, I am signing this object:
+
+{
+  "body": {
+    "key": {
+      "eldest_kid": "0101ad33687f839730887a6456f15e971f03765aa2cdf6160a090431c4497fbf98970a",
+      "host": "keybase.io",
+      "kid": "01201e0c427e9e02895bc3b05214e5bf0069a4daea63696b0cd21d289ba9f44e0be00a",
+      "uid": "e38e2acc8ae8c380f0088e8e5882e619",
+      "username": "betsegaw"
+    },
+    "merkle_root": {
+      "ctime": 1591859784,
+      "hash": "2f4bb401751157c797eddc7badf8e015b98a7575fd8d355ebf99de9d73f7fb7be26c463476927f34a590727d907c474a9ea8153ddff80d8bc0d3133439a8551e",
+      "hash_meta": "b264198c477cea231288e65784dcaa7bebf965d6fe92f7058fdde4965c48a971",
+      "seqno": 16627454
+    },
+    "service": {
+      "entropy": "/q4PNCsK8Upt6NH+B+fJIHui",
+      "hostname": "finalid.org",
+      "protocol": "https:"
+    },
+    "type": "web_service_binding",
+    "version": 2
+  },
+  "client": {
+    "name": "keybase.io go client",
+    "version": "5.5.0"
+  },
+  "ctime": 1591859811,
+  "expire_in": 504576000,
+  "prev": "e0757f7713bc5f54043f3f561774eb2bd8e3e921d88ec443170479737ba1827f",
+  "seqno": 62,
+  "tag": "signature"
+}
+
+which yields the signature:
+
+hKRib2R5hqhkZXRhY2hlZMOpaGFzaF90eXBlCqNrZXnEIwEgHgxCfp4CiVvDsFIU5b8AaaTa6mNpawzSHSibqfROC+AKp3BheWxvYWTESpcCPsQg4HV/dxO8X1QEPz9WF3TrK9jj6SHYjsRDFwR5c3uhgn/EIGAlPPlKzgANAV9ov7Tul/LUHZob3SF14r/eNowYMOI9AgHCo3NpZ8RArQ9+wHlfe6FIAtjKJq0jafAoivUOLhw1NHdJeVV0+XFl02rDhELO+gGjlkwfYvZrSrWnQVpzrCdvCd4pL0exA6hzaWdfdHlwZSCkaGFzaIKkdHlwZQildmFsdWXEIAJ0CC+/btdIh2s8rugd8pNR1bhKLuDYyv5hCP7B1iapo3RhZ80CAqd2ZXJzaW9uAQ==
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/betsegaw
+
+==================================================================
