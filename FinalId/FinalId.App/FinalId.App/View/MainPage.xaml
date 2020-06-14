@@ -13,7 +13,7 @@
             <ListView x:Name="listView" SeparatorVisibility="None" ItemsSource="{Binding EndorsedIdentities}" SelectionMode="None">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <TextCell Text="{Binding FriendlyName}"/>
+                        <TextCell Text="{Binding FriendlyName}" Command="{Binding Path=BindingContext.SelectEndorsedIdentityCommand, Source={x:Reference Name=listView}}" CommandParameter="{Binding .}"/>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>

@@ -12,11 +12,23 @@ namespace FinalId.App.ViewModel
     using FinalId.App.Components;
     using FinalId.App.MVVMHelpers;
     using FinalId.Core;
+    using Xamarin.Forms;
 
     public class MainPageViewModel : ViewModelBase, IIdentityVerificationReceiver
     {
         private Identity _verifiedIdentity;
         private ObservableCollection<Identity> _endorsedIdentities = new ObservableCollection<Identity>();
+
+        public ICommand SelectEndorsedIdentityCommand
+        {
+            get
+            {
+                return new Command<Identity>(async (model) =>
+                {
+                    await this.SelectEndorsedIdentity(model);
+                });
+            }
+        }
 
         public ICommand VerifyIDCommand
         {
@@ -68,6 +80,11 @@ namespace FinalId.App.ViewModel
             }
 
             (await LocalIdentityStore.Instance.GetAllIdentities()).ForEach(identity => _endorsedIdentities.Insert(_endorsedIdentities.Count, identity));
+        }
+
+        public async Task SelectEndorsedIdentity(Identity endorsedIdentity)
+        {
+            await NavigationMaster.Instance.NavigateTo(new VerifiedIDInfoViewModel(endorsedIdentity));
         }
 
         public async Task VerifyID()
