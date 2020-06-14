@@ -99,24 +99,7 @@ namespace FinalId.App.ViewModel
                 .ToList();
 
             var allEndorsementsDisplay = new QRDisplayViewModel(JsonConvert.SerializeObject(endorsements), "Endorsements List");
-            var endorsementDisplay = new QRDisplayViewModel(string.Empty, "Endorsement");
-            endorsementDisplay.PostDisplayComplete = new MainPageViewModel();
-
-            var scanSelectedEndorsementPublicKey = new ScanQRCodeViewModel(
-                (string publicKeyFingerprint) =>
-                {
-                    string endorsement = LocalIdentityStore.Instance.GetCurrentIdentity()
-                        .Result
-                        .Endorsements.Where(x => x.EndorserPublicKeyFingerprint == publicKeyFingerprint)
-                        .First()
-                        .ToString();
-
-                    endorsementDisplay.Content = endorsement;
-                },
-                endorsementDisplay,
-                "Scan selected Endorser");
-
-            await NavigationMaster.Instance.NavigateTo(allEndorsementsDisplay);
+            allEndorsementsDisplay.PostDisplayComplete = new MainPageViewModel();
         }
 
         public async Task SelectEndorsedIdentity(Identity endorsedIdentity)
