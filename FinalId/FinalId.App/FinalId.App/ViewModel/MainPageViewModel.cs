@@ -144,7 +144,7 @@ namespace FinalId.App.ViewModel
 
                     if (endorserIdentity.IsValidEndorsement(endorsement))
                     {
-                        LocalIdentityStore.Instance.StoreIdentity(endorserIdentity);
+                        await LocalIdentityStore.Instance.StoreIdentity(endorserIdentity);
                         LocalIdentityStore.Instance.AcceptEndorsement(endorsement);
                     }
                 },
