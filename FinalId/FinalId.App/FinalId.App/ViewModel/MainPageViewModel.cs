@@ -7,11 +7,13 @@ namespace FinalId.App.ViewModel
 {
     using System;
     using System.Collections.ObjectModel;
+    using System.Linq;
     using System.Threading.Tasks;
     using System.Windows.Input;
     using FinalId.App.Components;
     using FinalId.App.MVVMHelpers;
     using FinalId.Core;
+    using Newtonsoft.Json;
     using Xamarin.Forms;
 
     public class MainPageViewModel : ViewModelBase, IIdentityVerificationReceiver
@@ -35,6 +37,14 @@ namespace FinalId.App.ViewModel
             get
             {
                 return new AsyncCommand(this.VerifyID);
+            }
+        }
+
+        public ICommand ShareEndorsementsCommand
+        {
+            get
+            {
+                return new AsyncCommand(this.ShareEndorsements);
             }
         }
 
@@ -80,6 +90,33 @@ namespace FinalId.App.ViewModel
             }
 
             (await LocalIdentityStore.Instance.GetAllIdentities()).ForEach(identity => _endorsedIdentities.Insert(_endorsedIdentities.Count, identity));
+        }
+
+        public async Task ShareEndorsements()
+        {
+            var endorsements = (await LocalIdentityStore.Instance.GetCurrentIdentity())
+                .Endorsements.Select(x => x.EndorserPublicKeyFingerprint)
+                .ToList();
+
+            var allEndorsementsDisplay = new QRDisplayViewModel(JsonConvert.SerializeObject(endorsements), "Endorsements List");
+            var endorsementDisplay = new QRDisplayViewModel(string.Empty, "Endorsement");
+            endorsementDisplay.PostDisplayComplete = new MainPageViewModel();
+
+            var scanSelectedEndorsementPublicKey = new ScanQRCodeViewModel(
+                (string publicKeyFingerprint) =>
+                {
+                    string endorsement = LocalIdentityStore.Instance.GetCurrentIdentity()
+                        .Result
+                        .Endorsements.Where(x => x.EndorserPublicKeyFingerprint == publicKeyFingerprint)
+                        .First()
+                        .ToString();
+
+                    endorsementDisplay.Content = endorsement;
+                },
+                endorsementDisplay,
+                "Scan selected Endorser");
+
+            await NavigationMaster.Instance.NavigateTo(allEndorsementsDisplay);
         }
 
         public async Task SelectEndorsedIdentity(Identity endorsedIdentity)

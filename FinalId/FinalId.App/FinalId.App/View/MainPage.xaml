@@ -17,10 +17,21 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            
+
             <Button 
             Text="Approve New Device"
             Command="{Binding AppoveNewDeviceCommand}"
+            IsEnabled="True"
+            BackgroundColor="#304FFE"
+            TextColor="White"
+            BorderRadius="50"
+            Margin="10,10"
+            WidthRequest="300"
+            HeightRequest="100"/>
+
+            <Button 
+            Text="Share Endorsements"
+            Command="{Binding ShareEndorsementsCommand}"
             IsEnabled="True"
             BackgroundColor="#304FFE"
             TextColor="White"
