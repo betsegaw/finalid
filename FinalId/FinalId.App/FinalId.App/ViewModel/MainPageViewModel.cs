@@ -116,6 +116,7 @@ namespace FinalId.App.ViewModel
         public async Task ShowEndorsement()
         {
             QRDisplayViewModel endorsementDisplay = new QRDisplayViewModel(string.Empty, "Endorsement");
+            endorsementDisplay.PostDisplayComplete = new MainPageViewModel();
 
             var scanEndorserGUID = new ScanQRCodeViewModel(
                 (string endorserGuidAsString) =>
@@ -127,6 +128,8 @@ namespace FinalId.App.ViewModel
                 },
                 endorsementDisplay,
                 "Scan Endorsement GUID");
+
+            await NavigationMaster.Instance.NavigateTo(scanEndorserGUID);
         }
 
         public async Task SelectEndorsedIdentity(Identity endorsedIdentity)
