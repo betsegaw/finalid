@@ -32,7 +32,7 @@ namespace FinalId.App.Components
         {
             try
             {
-                var identityList = JsonConvert.DeserializeObject<List<Guid>>(await SecureStorage.GetAsync(SSListOfStoredIdentities));
+                var identityList = JsonConvert.DeserializeObject<HashSet<Guid>>(await SecureStorage.GetAsync(SSListOfStoredIdentities));
 
                 List<Identity> result = new List<Identity>();
 
@@ -100,14 +100,14 @@ namespace FinalId.App.Components
         {
             await SecureStorage.SetAsync(publicIdentity.IdentityGUID.ToString(), publicIdentity.ToString());
 
-            List<Guid> identityList;
+            HashSet<Guid> identityList;
             try
             {
-                identityList = JsonConvert.DeserializeObject<List<Guid>>(await SecureStorage.GetAsync(SSListOfStoredIdentities));
+                identityList = JsonConvert.DeserializeObject<HashSet<Guid>>(await SecureStorage.GetAsync(SSListOfStoredIdentities));
             }
             catch
             {
-                identityList = new List<Guid>();
+                identityList = new HashSet<Guid>();
             }
 
             identityList.Add(publicIdentity.IdentityGUID);
