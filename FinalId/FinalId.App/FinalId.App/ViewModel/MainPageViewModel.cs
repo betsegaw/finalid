@@ -101,6 +101,8 @@ namespace FinalId.App.ViewModel
 
             var allEndorsementsDisplay = new QRDisplayViewModel(JsonConvert.SerializeObject(endorsements), "Endorsements List");
             allEndorsementsDisplay.PostDisplayComplete = new MainPageViewModel();
+
+            await NavigationMaster.Instance.NavigateTo(allEndorsementsDisplay);
         }
 
         public async Task SelectEndorsedIdentity(Identity endorsedIdentity)
