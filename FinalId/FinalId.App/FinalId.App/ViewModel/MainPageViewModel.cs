@@ -41,6 +41,14 @@ namespace FinalId.App.ViewModel
             }
         }
 
+        public ICommand ShowEndorsementCommand
+        {
+            get
+            {
+                return new AsyncCommand(this.ShowEndorsement);
+            }
+        }
+
         public ICommand ShareEndorsementsCommand
         {
             get
@@ -96,13 +104,29 @@ namespace FinalId.App.ViewModel
         public async Task ShareEndorsements()
         {
             var endorsements = (await LocalIdentityStore.Instance.GetCurrentIdentity())
-                .Endorsements.Select(x => x.EndorserPublicKeyFingerprint)
+                .Endorsements.Select(x => x.EndorserGUID)
                 .ToList();
 
             var allEndorsementsDisplay = new QRDisplayViewModel(JsonConvert.SerializeObject(endorsements), "Endorsements List");
             allEndorsementsDisplay.PostDisplayComplete = new MainPageViewModel();
 
             await NavigationMaster.Instance.NavigateTo(allEndorsementsDisplay);
+        }
+
+        public async Task ShowEndorsement()
+        {
+            QRDisplayViewModel endorsementDisplay = new QRDisplayViewModel(string.Empty, "Endorsement");
+
+            var scanEndorserGUID = new ScanQRCodeViewModel(
+                (string endorserGuidAsString) =>
+                {
+                    var endorsement = LocalIdentityStore.Instance.GetCurrentIdentity().Result.Endorsements
+                    .Where(x => x.EndorserGUID == endorserGuidAsString)
+                    .First();
+                    endorsementDisplay.Content = endorsement.ToString();
+                },
+                endorsementDisplay,
+                "Scan Endorsement GUID");
         }
 
         public async Task SelectEndorsedIdentity(Identity endorsedIdentity)
