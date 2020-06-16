@@ -6,6 +6,7 @@
 namespace FinalId.App.ViewModel
 {
     using System;
+    using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Linq;
     using System.Threading.Tasks;
@@ -123,15 +124,28 @@ namespace FinalId.App.ViewModel
 
         public async Task AcceptEndorsement()
         {
-            Endorsement endorsement;
+            Endorsement endorsement = null;
             KeyPair publicKey = null; // assigning here to make compiler happy
             Guid guid;
+            Identity endorserIdentity = null;
+
+            var getFriendlyName = new InputPageViewModel(
+                new List<InputViewModel>() { new InputViewModel() },
+                async (content) =>
+                {
+                    endorserIdentity.FriendlyName = content.First().Content;
+                    if (endorserIdentity.IsValidEndorsement(endorsement))
+                    {
+                        await LocalIdentityStore.Instance.StoreIdentity(endorserIdentity);
+                        LocalIdentityStore.Instance.AcceptEndorsement(endorsement);
+                    }
+                },
+                new MainPageViewModel());
 
             var readEndorsement = new ScanQRCodeViewModel(
                 async (string result) =>
                 {
                     endorsement = Endorsement.GetFromJSONString(result);
-                    Identity endorserIdentity;
 
                     endorserIdentity = await LocalIdentityStore.Instance.GetIdentity(guid);
 
@@ -141,14 +155,8 @@ namespace FinalId.App.ViewModel
                     }
 
                     endorserIdentity.KeyPairsAssertingOwnership.Add(publicKey);
-
-                    if (endorserIdentity.IsValidEndorsement(endorsement))
-                    {
-                        await LocalIdentityStore.Instance.StoreIdentity(endorserIdentity);
-                        LocalIdentityStore.Instance.AcceptEndorsement(endorsement);
-                    }
                 },
-                new MainPageViewModel(),
+                getFriendlyName,
                 "Scan endorsement");
 
             var readPublicKey = new ScanQRCodeViewModel((byte[] result) => { publicKey = new KeyPair(result); }, readEndorsement, "Scan Public Key");
