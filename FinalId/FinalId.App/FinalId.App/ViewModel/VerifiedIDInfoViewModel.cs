@@ -11,6 +11,7 @@ namespace FinalId.App.ViewModel
     using FinalId.App.Components;
     using FinalId.App.MVVMHelpers;
     using FinalId.Core;
+    using Newtonsoft.Json;
 
     public class VerifiedIDInfoViewModel : MVVMHelpers.ViewModelBase
     {
@@ -89,7 +90,48 @@ namespace FinalId.App.ViewModel
 
         public async void VerifyEndorsement()
         {
+            List<ListItemViewModel> identitiesInCommon = new List<ListItemViewModel>();
+
+            ListPageViewModel displayListOfCommonIdentities = new ListPageViewModel(identitiesInCommon, this);
+
             // Do some endorsement
+            ScanQRCodeViewModel scanListOfEndorsedGuids = new ScanQRCodeViewModel(
+                (string endorsementsAsString) =>
+                {
+                    List<string> endorsingIDs = JsonConvert.DeserializeObject<List<string>>(endorsementsAsString);
+
+                    IEnumerable<Identity> intersectionOfIdentities = LocalIdentityStore.Instance.GetAllIdentities().Result.Where(x => endorsingIDs.Contains(x.IdentityGUID.ToString()));
+
+                    foreach (var identity in intersectionOfIdentities)
+                    {
+                        identitiesInCommon.Add(new ListItemViewModel(identity, identity.FriendlyName, () =>
+                        {
+                            MessagePageViewModel verificationResult = new MessagePageViewModel(string.Empty, displayListOfCommonIdentities);
+
+                            QRDisplayViewModel displaySelectedIdentityQR = new QRDisplayViewModel(
+                                ((Identity)identity).IdentityGUID.ToString(),
+                                "Display selected identity");
+
+                            ScanQRCodeViewModel scanGUID = new ScanQRCodeViewModel(
+                                (string endorsement) =>
+                                {
+                                    var endorsementIsValid = identity.IsValidEndorsement(Endorsement.GetFromJSONString(endorsement));
+                                    if (endorsementIsValid)
+                                    {
+                                        verificationResult.Message = "Correct";
+                                    }
+                                    else
+                                    {
+                                        verificationResult.Message = "Wrong";
+                                    }
+                                },
+                                verificationResult,
+                                "Scan endorsement");
+                        }));
+                    }
+                },
+                displayListOfCommonIdentities,
+                "Scan list of endorsements");
 
             // Navigate back to main page
             await NavigationMaster.Instance.NavigateTo(new MainPageViewModel());

@@ -5,13 +5,32 @@
 
 namespace FinalId.App.ViewModel
 {
+    using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using System.Threading.Tasks;
     using System.Windows.Input;
+    using FinalId.App.Components;
+    using FinalId.App.MVVMHelpers;
     using Xamarin.Forms;
 
     public class ListPageViewModel : MVVMHelpers.ViewModelBase
     {
-        private ObservableCollection<ListItemViewModel> _items = new ObservableCollection<ListItemViewModel>();
+        private ObservableCollection<ListItemViewModel> _items;
+
+        public ListPageViewModel(List<ListItemViewModel> items, ViewModelBase doneTarget)
+        {
+            this.Items = new ObservableCollection<ListItemViewModel>();
+            items.ForEach(input => this.Items.Insert(this.Items.Count, input));
+            this.DoneTarget = doneTarget;
+        }
+
+        public ICommand DoneCommand
+        {
+            get
+            {
+                return new AsyncCommand(this.Done);
+            }
+        }
 
         public ObservableCollection<ListItemViewModel> Items
         {
@@ -39,6 +58,13 @@ namespace FinalId.App.ViewModel
                     model.Tapped();
                 });
             }
+        }
+
+        public ViewModelBase DoneTarget { get; set; }
+
+        public async Task Done()
+        {
+            await NavigationMaster.Instance.NavigateTo(DoneTarget);
         }
     }
 }
