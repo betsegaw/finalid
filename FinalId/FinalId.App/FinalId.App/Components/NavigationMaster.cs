@@ -29,6 +29,7 @@ namespace FinalId.App.Components
             { typeof(VerifyIDViewModel), typeof(LoadingPage) },
             { typeof(ShowIDViewModel), typeof(LoadingPage) },
             { typeof(InputPageViewModel), typeof(InputPage) },
+            { typeof(ListPageViewModel), typeof(ListPage) },
         };
 
         static NavigationMaster()
