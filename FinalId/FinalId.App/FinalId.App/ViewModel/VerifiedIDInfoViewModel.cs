@@ -6,6 +6,7 @@
 namespace FinalId.App.ViewModel
 {
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     using System.Linq;
     using System.Windows.Input;
     using FinalId.App.Components;
@@ -90,7 +91,7 @@ namespace FinalId.App.ViewModel
 
         public async void VerifyEndorsement()
         {
-            List<ListItemViewModel> identitiesInCommon = new List<ListItemViewModel>();
+            ObservableCollection<ListItemViewModel> identitiesInCommon = new ObservableCollection<ListItemViewModel>();
 
             ListPageViewModel displayListOfCommonIdentities = new ListPageViewModel(identitiesInCommon, this);
 
@@ -127,6 +128,10 @@ namespace FinalId.App.ViewModel
                                 },
                                 verificationResult,
                                 "Scan endorsement");
+
+                            displaySelectedIdentityQR.PostDisplayComplete = scanGUID;
+
+                            NavigationMaster.Instance.NavigateTo(displaySelectedIdentityQR);
                         }));
                     }
                 },
@@ -134,7 +139,7 @@ namespace FinalId.App.ViewModel
                 "Scan list of endorsements");
 
             // Navigate back to main page
-            await NavigationMaster.Instance.NavigateTo(new MainPageViewModel());
+            await NavigationMaster.Instance.NavigateTo(scanListOfEndorsedGuids);
         }
     }
 }

@@ -5,7 +5,6 @@
 
 namespace FinalId.App.ViewModel
 {
-    using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Threading.Tasks;
     using System.Windows.Input;
@@ -17,10 +16,9 @@ namespace FinalId.App.ViewModel
     {
         private ObservableCollection<ListItemViewModel> _items;
 
-        public ListPageViewModel(List<ListItemViewModel> items, ViewModelBase doneTarget)
+        public ListPageViewModel(ObservableCollection<ListItemViewModel> items, ViewModelBase doneTarget)
         {
-            this.Items = new ObservableCollection<ListItemViewModel>();
-            items.ForEach(input => this.Items.Insert(this.Items.Count, input));
+            this.Items = items;
             this.DoneTarget = doneTarget;
         }
 
