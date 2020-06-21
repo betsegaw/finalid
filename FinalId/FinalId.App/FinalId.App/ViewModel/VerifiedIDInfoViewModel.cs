@@ -113,7 +113,7 @@ namespace FinalId.App.ViewModel
                                 ((Identity)identity).IdentityGUID.ToString(),
                                 "Display selected identity");
 
-                            ScanQRCodeViewModel scanGUID = new ScanQRCodeViewModel(
+                            ScanQRCodeViewModel scanEndorsement = new ScanQRCodeViewModel(
                                 (string endorsement) =>
                                 {
                                     var endorsementIsValid = identity.IsValidEndorsement(Endorsement.GetFromJSONString(endorsement));
@@ -129,7 +129,7 @@ namespace FinalId.App.ViewModel
                                 verificationResult,
                                 "Scan endorsement");
 
-                            displaySelectedIdentityQR.PostDisplayComplete = scanGUID;
+                            displaySelectedIdentityQR.PostDisplayComplete = scanEndorsement;
 
                             NavigationMaster.Instance.NavigateTo(displaySelectedIdentityQR);
                         }));
