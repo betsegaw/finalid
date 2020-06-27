@@ -9,8 +9,8 @@
         <StackLayout
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" >
-            <Label Text="Loading..." FontSize="Large"/>
-            <ActivityIndicator Color="Blue" IsRunning="true" />
+            <Label Text="Loading..." FontSize="Title"/>
+            <ActivityIndicator Color="Gray" IsRunning="true" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
