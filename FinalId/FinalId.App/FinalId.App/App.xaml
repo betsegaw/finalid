@@ -14,7 +14,14 @@
                 <Setter Property="Margin" Value="10"/>
                 <Setter Property="WidthRequest" Value="300" />
                 <Setter Property="HeightRequest" Value="100" />
+                <Setter Property="FontSize" Value="Title"/>
             </Style>
+            <Style x:Key="CommandButtonStyle" TargetType="Button">
+                <Setter Property="ContentLayout" Value="Top,0" />
+                <Setter Property="HorizontalOptions" Value="StartAndExpand" />
+                <Setter Property="WidthRequest" Value="150" />
+            </Style>
+            
         </ResourceDictionary>
     </Application.Resources>
 </Application>

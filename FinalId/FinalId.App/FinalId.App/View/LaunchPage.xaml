@@ -27,7 +27,7 @@
 
         <StackLayout Grid.Row="1">
             <Button 
-                Text="I already have an ID"
+                Text="Use existing ID"
                 Command="{Binding GetExistingIDCommand}"
                 IsEnabled="True"
                 Style="{StaticResource BigButtonStyle}"
@@ -35,7 +35,7 @@
                 />
         
             <Button
-                Text="I don't have an ID"
+                Text="Create a new ID"
                 Command="{Binding RequestNewIDCommand}"
                 IsEnabled="True"
                 Style="{StaticResource BigButtonStyle}"
