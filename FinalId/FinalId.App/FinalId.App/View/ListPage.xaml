@@ -19,12 +19,7 @@
             Text="Done"
             Command="{Binding DoneCommand}"
             IsEnabled="True"
-            BackgroundColor="#304FFE"
-            TextColor="White"
-            BorderRadius="50"
-            Margin="10,10"
-            WidthRequest="300"
-            HeightRequest="100"/>
+            Style="{StaticResource BigButtonStyle}"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

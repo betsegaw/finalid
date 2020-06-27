@@ -9,10 +9,17 @@
         <StackLayout
             VerticalOptions="CenterAndExpand" 
             HorizontalOptions="CenterAndExpand">
-            <ListView x:Name="listView" SeparatorVisibility="None" ItemsSource="{Binding Inputs}" SelectionMode="None">
+            <ListView x:Name="listView" SeparatorVisibility="None" Margin="0,30" ItemsSource="{Binding Inputs}" SelectionMode="None">
+                <d:ListView.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                        <x:String>Betsegaw Tadele</x:String>
+                        <x:String>Heram Mekonen</x:String>
+                        <x:String>Beimnet Tadele</x:String>
+                    </x:Array>
+                </d:ListView.ItemsSource>
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <EntryCell Label="{Binding Label}" Text="{Binding Content}"/>
+                        <EntryCell Label="{Binding Label}" d:Label="{Binding .}" Text="{Binding Content}" d:Text="{Binding .}"/>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
@@ -20,12 +27,7 @@
             Text="Submit"
             Command="{Binding SubmitCommand}"
             IsEnabled="True"
-            BackgroundColor="#304FFE"
-            TextColor="White"
-            BorderRadius="50"
-            Margin="10,10"
-            WidthRequest="300"
-            HeightRequest="100"/>
+            Style="{StaticResource BigButtonStyle}"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

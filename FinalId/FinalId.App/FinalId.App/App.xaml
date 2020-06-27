@@ -8,8 +8,10 @@
     <Application.Resources>
         <ResourceDictionary>
             <Style x:Key="BigButtonStyle" TargetType="Button">
-                <Setter Property="BackgroundColor" Value="#304FFE" />
-                <Setter Property="TextColor" Value="White" />
+                <Setter Property="BackgroundColor" Value="White" />
+                <Setter Property="BorderColor" Value="Black" />
+                <Setter Property="BorderWidth" Value="1"/>
+                <Setter Property="TextColor" Value="Black" />
                 <Setter Property="BorderRadius" Value="50" />
                 <Setter Property="Margin" Value="10"/>
                 <Setter Property="WidthRequest" Value="300" />
