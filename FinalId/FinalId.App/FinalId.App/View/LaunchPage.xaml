@@ -6,31 +6,45 @@
              mc:Ignorable="d"
              x:Class="FinalId.App.View.LaunchPage">
 
-    <StackLayout 
-        VerticalOptions="CenterAndExpand" 
-        HorizontalOptions="CenterAndExpand">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+
+        <Label Text="Hello!" 
+               VerticalOptions="CenterAndExpand" 
+               HorizontalOptions="CenterAndExpand"
+               FontSize="Title">
+            <Label.FontFamily>
+                <OnPlatform x:TypeArguments="x:String">
+                    <On Platform="iOS" Value="MarkerFelt-Thin" />
+                    <On Platform="Android" Value="Lobster-Regular.ttf#Lobster-Regular" />
+                    <On Platform="UWP" Value="Assets/Fonts/ArimaMadurai-Black.ttf#Arima Madurai" />
+                </OnPlatform>
+            </Label.FontFamily>
+        </Label>
+
+        <StackLayout Grid.Row="1">
+            <Button 
+                Text="I already have an ID"
+                Command="{Binding GetExistingIDCommand}"
+                IsEnabled="True"
+                Style="{StaticResource BigButtonStyle}"
+                BackgroundColor="Green"
+                />
         
-        <Button 
-            Text="I already have an ID"
-            Command="{Binding GetExistingIDCommand}"
-            IsEnabled="True"
-            BackgroundColor="#304FFE"
-            TextColor="White"
-            BorderRadius="50"
-            Margin="10,10"
-            WidthRequest="300"
-            HeightRequest="100"/>
-        
-        <Button
-            Text="I don't have an ID"
-            Command="{Binding RequestNewIDCommand}"
-            IsEnabled="True"
-            BackgroundColor="#304FFE"
-            TextColor="White"
-            BorderRadius="50"
-            Margin="10,10"
-            HeightRequest="100"/>
-        
-    </StackLayout>
+            <Button
+                Text="I don't have an ID"
+                Command="{Binding RequestNewIDCommand}"
+                IsEnabled="True"
+                Style="{StaticResource BigButtonStyle}"
+                BackgroundColor="White"
+                TextColor="Black"
+                BorderColor="Gray"
+                BorderWidth="1"/>
+        </StackLayout>
+    </Grid>
 
 </ContentPage>
