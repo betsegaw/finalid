@@ -8,19 +8,27 @@
     <ContentPage.Content>
 
         <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="1*" />
-                <RowDefinition Height="1*" />
-            </Grid.RowDefinitions>
-            <ListView x:Name="listView" SeparatorVisibility="None" ItemsSource="{Binding EndorsedIdentities}" SelectionMode="None">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
+            <ListView x:Name="listView" SeparatorVisibility="None" ItemsSource="{Binding EndorsedIdentities}" SelectionMode="None"
+                      Margin="10,20">
+                <d:ListView.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                        <x:String>Betsegaw Tadele</x:String>
+                        <x:String>Heram Mekonen</x:String>
+                        <x:String>Beimnet Tadele</x:String>
+                    </x:Array>
+                </d:ListView.ItemsSource>
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <TextCell Text="{Binding FriendlyName}" Command="{Binding Path=BindingContext.SelectEndorsedIdentityCommand, Source={x:Reference Name=listView}}" CommandParameter="{Binding .}"/>
+                        <TextCell Text="{Binding FriendlyName}" d:Text="{Binding .}" Command="{Binding Path=BindingContext.SelectEndorsedIdentityCommand, Source={x:Reference Name=listView}}" CommandParameter="{Binding .}"/>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
             
-            <FlexLayout Grid.Row="1" Wrap="Wrap" JustifyContent="SpaceEvenly">
+            <FlexLayout Grid.Column="1" Wrap="Wrap" JustifyContent="SpaceEvenly" Margin="10,20">
                 <Button 
                 Text="Approve New Device"
                 Command="{Binding AppoveNewDeviceCommand}"
