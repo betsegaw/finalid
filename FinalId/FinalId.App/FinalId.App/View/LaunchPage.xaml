@@ -13,18 +13,17 @@
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
 
-        <Label Text="Hello!" 
+        <StackLayout
                VerticalOptions="CenterAndExpand" 
                HorizontalOptions="CenterAndExpand"
-               FontSize="Title">
-            <Label.FontFamily>
-                <OnPlatform x:TypeArguments="x:String">
-                    <On Platform="iOS" Value="MarkerFelt-Thin" />
-                    <On Platform="Android" Value="Lobster-Regular.ttf#Lobster-Regular" />
-                    <On Platform="UWP" Value="Assets/Fonts/ArimaMadurai-Black.ttf#Arima Madurai" />
-                </OnPlatform>
-            </Label.FontFamily>
-        </Label>
+                Padding="50,60,50,10">
+            <Label Text="Hello!" 
+               FontSize="Title"
+                   HorizontalTextAlignment="Center"/>
+            <Label Text="Lets get your started with Final ID" 
+                   FontSize="Subtitle"
+                   HorizontalTextAlignment="Center"/>
+        </StackLayout>
 
         <StackLayout Grid.Row="1">
             <Button 
