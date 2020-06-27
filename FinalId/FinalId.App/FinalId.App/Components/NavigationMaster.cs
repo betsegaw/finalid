@@ -89,6 +89,7 @@ namespace FinalId.App.Components
             if (!this.IsInTestMode)
             {
                 var view = (ContentPage)Activator.CreateInstance(this.viewToViewModelMapping[viewModelInstance.GetType()]);
+                NavigationPage.SetHasNavigationBar(view, false);
                 view.BindingContext = this.CurrentViewModel;
                 await this.AppView.Navigation.PushAsync(view);
             }
