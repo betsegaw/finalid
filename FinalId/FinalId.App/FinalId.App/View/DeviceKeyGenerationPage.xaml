@@ -9,8 +9,8 @@
         <StackLayout
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" >
-            <Label Text="Generating Device Keys!"/>
-            <ActivityIndicator Color="Blue" IsRunning="true" />
+            <Label Text="Generating Device Keys!" FontSize="Title"/>
+            <ActivityIndicator Color="Gray" IsRunning="true" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
