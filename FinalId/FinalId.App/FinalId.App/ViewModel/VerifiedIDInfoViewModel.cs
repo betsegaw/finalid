@@ -41,6 +41,14 @@ namespace FinalId.App.ViewModel
             }
         }
 
+        public ICommand DoneCommand
+        {
+            get
+            {
+                return new RelayCommand(this.Done) { IsEnabled = true };
+            }
+        }
+
         public string ID
         {
             get
@@ -56,6 +64,11 @@ namespace FinalId.App.ViewModel
                     NotifyPropertyChanged("ID");
                 }
             }
+        }
+
+        public async void Done()
+        {
+            await NavigationMaster.Instance.NavigateTo(new MainPageViewModel());
         }
 
         public async void Endorse()

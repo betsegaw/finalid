@@ -18,6 +18,11 @@
             Command="{Binding EndorseCommand}"
             IsEnabled="True"
             Style="{StaticResource BigButtonStyle}"/>
+            <Button 
+            Text="Done"
+            Command="{Binding DoneCommand}"
+            IsEnabled="True"
+            Style="{StaticResource BigButtonStyle}"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

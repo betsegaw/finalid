@@ -30,27 +30,21 @@
             
             <FlexLayout Grid.Column="1" Wrap="Wrap" JustifyContent="SpaceEvenly" Margin="10,20">
                 <Button 
-                Text="Approve New Device"
+                Text="Add your other devices"
                 Command="{Binding AppoveNewDeviceCommand}"
                 IsEnabled="True"
                 Style="{StaticResource CommandButtonStyle}"
                 Image="btnicon"/>
                 
                 <Button 
-                Text="Show endorsement"
+                Text="Show a single endorsement"
                 Command="{Binding ShowEndorsementCommand}"
                 IsEnabled="True"
                 Style="{StaticResource CommandButtonStyle}"/>
             
                 <Button 
-                Text="Share Endorsements"
+                Text="Share a list of your Endorsements"
                 Command="{Binding ShareEndorsementsCommand}"
-                IsEnabled="True"
-                Style="{StaticResource CommandButtonStyle}"/>
-
-                <Button 
-                Text="Show ID"
-                Command="{Binding ShowIDCommand}"
                 IsEnabled="True"
                 Style="{StaticResource CommandButtonStyle}"/>
 
@@ -60,8 +54,14 @@
                 IsEnabled="True"
                 Style="{StaticResource CommandButtonStyle}"/>
 
+                <Button 
+                Text="Show your ID"
+                Command="{Binding ShowIDCommand}"
+                IsEnabled="True"
+                Style="{StaticResource CommandButtonStyle}"/>
+
                 <Button
-                Text="Verify ID"
+                Text="Verify a stranger's ID"
                 Command="{Binding VerifyIDCommand}"
                 IsEnabled="True"
                 Style="{StaticResource CommandButtonStyle}"/>

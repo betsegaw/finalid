@@ -7,14 +7,12 @@
              x:Class="FinalId.App.View.MessagePage">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="{Binding Message}"
-                   d:Text="❌"
+            <Label Text="❌"
                 HorizontalOptions="CenterAndExpand"
                 FontSize="Header"
                 TextColor="Red"
                 IsVisible="{Binding IsError}"/>
-            <Label Text="{Binding Message}"
-                   d:Text="✔️"
+            <Label Text="✔️"
                 HorizontalOptions="CenterAndExpand"
                 FontSize="Header"
                 TextColor="Green"
