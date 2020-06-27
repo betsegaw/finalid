@@ -13,11 +13,20 @@ namespace FinalId.App.ViewModel
     public class MessagePageViewModel : MVVMHelpers.ViewModelBase
     {
         private string _message = string.Empty;
+        private MessageIcons _messageIcon;
 
-        public MessagePageViewModel(string message, ViewModelBase doneTarget)
+        public MessagePageViewModel(string message, ViewModelBase doneTarget, MessageIcons messageIcon = MessageIcons.None)
         {
             this.Message = message;
             this.DoneTarget = doneTarget;
+            this._messageIcon = messageIcon;
+        }
+
+        public enum MessageIcons
+        {
+            Error,
+            Success,
+            None,
         }
 
         public ICommand DoneCommand
@@ -42,6 +51,39 @@ namespace FinalId.App.ViewModel
                     _message = value;
                     NotifyPropertyChanged("Message");
                 }
+            }
+        }
+
+        public MessageIcons MessageIcon
+        {
+            get
+            {
+                return _messageIcon;
+            }
+
+            set
+            {
+                if (value != _messageIcon)
+                {
+                    _messageIcon = value;
+                    NotifyPropertyChanged("MessageIcon");
+                }
+            }
+        }
+
+        public bool IsError
+        {
+            get
+            {
+                return _messageIcon == MessageIcons.Error;
+            }
+        }
+
+        public bool IsSuccess
+        {
+            get
+            {
+                return _messageIcon == MessageIcons.Success;
             }
         }
 

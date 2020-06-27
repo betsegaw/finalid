@@ -8,9 +8,24 @@
     <ContentPage.Content>
         <StackLayout>
             <Label Text="{Binding Message}"
+                   d:Text="❌"
+                HorizontalOptions="CenterAndExpand"
+                FontSize="Header"
+                TextColor="Red"
+                IsVisible="{Binding IsError}"/>
+            <Label Text="{Binding Message}"
+                   d:Text="✔️"
+                HorizontalOptions="CenterAndExpand"
+                FontSize="Header"
+                TextColor="Green"
+                IsVisible="{Binding IsSuccess}"/>
+            <Label Text="{Binding Message}"
+                   d:Text="This is a short message though it does go on for a little bit."
                 VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-
+                HorizontalOptions="CenterAndExpand"
+                FontSize="Title"
+                   Margin="20,10"
+                   HorizontalTextAlignment="Center"/>
             <Button 
             Text="Done"
             Command="{Binding DoneCommand}"

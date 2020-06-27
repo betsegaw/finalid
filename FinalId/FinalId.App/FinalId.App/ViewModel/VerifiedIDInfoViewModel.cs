@@ -119,11 +119,13 @@ namespace FinalId.App.ViewModel
                                     var endorsementIsValid = identity.IsValidEndorsement(Endorsement.GetFromJSONString(endorsement));
                                     if (endorsementIsValid)
                                     {
-                                        verificationResult.Message = "Correct";
+                                        verificationResult.Message = "The endorsement is valid!";
+                                        verificationResult.MessageIcon = MessagePageViewModel.MessageIcons.Success;
                                     }
                                     else
                                     {
-                                        verificationResult.Message = "Wrong";
+                                        verificationResult.Message = "The endorsement is NOT valid!";
+                                        verificationResult.MessageIcon = MessagePageViewModel.MessageIcons.Error;
                                     }
                                 },
                                 verificationResult,
