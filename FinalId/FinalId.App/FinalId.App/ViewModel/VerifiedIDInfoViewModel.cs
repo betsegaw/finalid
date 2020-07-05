@@ -6,11 +6,13 @@
 namespace FinalId.App.ViewModel
 {
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     using System.Linq;
     using System.Windows.Input;
     using FinalId.App.Components;
     using FinalId.App.MVVMHelpers;
     using FinalId.Core;
+    using Newtonsoft.Json;
 
     public class VerifiedIDInfoViewModel : MVVMHelpers.ViewModelBase
     {
@@ -39,6 +41,14 @@ namespace FinalId.App.ViewModel
             }
         }
 
+        public ICommand DoneCommand
+        {
+            get
+            {
+                return new RelayCommand(this.Done) { IsEnabled = true };
+            }
+        }
+
         public string ID
         {
             get
@@ -54,6 +64,11 @@ namespace FinalId.App.ViewModel
                     NotifyPropertyChanged("ID");
                 }
             }
+        }
+
+        public async void Done()
+        {
+            await NavigationMaster.Instance.NavigateTo(new MainPageViewModel());
         }
 
         public async void Endorse()
@@ -89,10 +104,57 @@ namespace FinalId.App.ViewModel
 
         public async void VerifyEndorsement()
         {
+            ObservableCollection<ListItemViewModel> identitiesInCommon = new ObservableCollection<ListItemViewModel>();
+
+            ListPageViewModel displayListOfCommonIdentities = new ListPageViewModel(identitiesInCommon, this);
+
             // Do some endorsement
+            ScanQRCodeViewModel scanListOfEndorsedGuids = new ScanQRCodeViewModel(
+                (string endorsementsAsString) =>
+                {
+                    List<string> endorsingIDs = JsonConvert.DeserializeObject<List<string>>(endorsementsAsString);
+
+                    IEnumerable<Identity> intersectionOfIdentities = LocalIdentityStore.Instance.GetAllIdentities().Result.Where(x => endorsingIDs.Contains(x.IdentityGUID.ToString()));
+
+                    foreach (var identity in intersectionOfIdentities)
+                    {
+                        identitiesInCommon.Add(new ListItemViewModel(identity, identity.FriendlyName, () =>
+                        {
+                            MessagePageViewModel verificationResult = new MessagePageViewModel(string.Empty, displayListOfCommonIdentities);
+
+                            QRDisplayViewModel displaySelectedIdentityQR = new QRDisplayViewModel(
+                                ((Identity)identity).IdentityGUID.ToString(),
+                                "Display selected identity");
+
+                            ScanQRCodeViewModel scanEndorsement = new ScanQRCodeViewModel(
+                                (string endorsement) =>
+                                {
+                                    var endorsementIsValid = identity.IsValidEndorsement(Endorsement.GetFromJSONString(endorsement));
+                                    if (endorsementIsValid)
+                                    {
+                                        verificationResult.Message = "The endorsement is valid!";
+                                        verificationResult.MessageIcon = MessagePageViewModel.MessageIcons.Success;
+                                    }
+                                    else
+                                    {
+                                        verificationResult.Message = "The endorsement is NOT valid!";
+                                        verificationResult.MessageIcon = MessagePageViewModel.MessageIcons.Error;
+                                    }
+                                },
+                                verificationResult,
+                                "Scan endorsement");
+
+                            displaySelectedIdentityQR.PostDisplayComplete = scanEndorsement;
+
+                            NavigationMaster.Instance.NavigateTo(displaySelectedIdentityQR);
+                        }));
+                    }
+                },
+                displayListOfCommonIdentities,
+                "Scan list of endorsements");
 
             // Navigate back to main page
-            await NavigationMaster.Instance.NavigateTo(new MainPageViewModel());
+            await NavigationMaster.Instance.NavigateTo(scanListOfEndorsedGuids);
         }
     }
 }

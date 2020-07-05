@@ -7,7 +7,8 @@
              x:Class="FinalId.App.View.NewDevicePage">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="{Binding UserID}"
+            <Label Text="{Binding UserID}" d:Text="123e4567-e89b-12d3-a456-426614174000"
+                   FontSize="Subtitle"
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" />
         </StackLayout>

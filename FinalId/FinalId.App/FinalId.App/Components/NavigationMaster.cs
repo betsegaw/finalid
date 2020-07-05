@@ -29,6 +29,8 @@ namespace FinalId.App.Components
             { typeof(VerifyIDViewModel), typeof(LoadingPage) },
             { typeof(ShowIDViewModel), typeof(LoadingPage) },
             { typeof(InputPageViewModel), typeof(InputPage) },
+            { typeof(ListPageViewModel), typeof(ListPage) },
+            { typeof(MessagePageViewModel), typeof(MessagePage) },
         };
 
         static NavigationMaster()
@@ -87,6 +89,7 @@ namespace FinalId.App.Components
             if (!this.IsInTestMode)
             {
                 var view = (ContentPage)Activator.CreateInstance(this.viewToViewModelMapping[viewModelInstance.GetType()]);
+                NavigationPage.SetHasNavigationBar(view, false);
                 view.BindingContext = this.CurrentViewModel;
                 await this.AppView.Navigation.PushAsync(view);
             }

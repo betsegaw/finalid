@@ -6,61 +6,66 @@
              mc:Ignorable="d"
              x:Class="FinalId.App.View.MainPage">
     <ContentPage.Content>
-        
-        <StackLayout 
-        VerticalOptions="CenterAndExpand" 
-        HorizontalOptions="CenterAndExpand">
-            <ListView x:Name="listView" SeparatorVisibility="None" ItemsSource="{Binding EndorsedIdentities}" SelectionMode="None">
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
+            <ListView x:Name="listView" SeparatorVisibility="None" ItemsSource="{Binding EndorsedIdentities}" SelectionMode="None"
+                      Margin="10,20">
+                <d:ListView.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                        <x:String>Betsegaw Tadele</x:String>
+                        <x:String>Heram Mekonen</x:String>
+                        <x:String>Beimnet Tadele</x:String>
+                    </x:Array>
+                </d:ListView.ItemsSource>
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <TextCell Text="{Binding FriendlyName}"/>
+                        <TextCell Text="{Binding FriendlyName}" d:Text="{Binding .}" Command="{Binding Path=BindingContext.SelectEndorsedIdentityCommand, Source={x:Reference Name=listView}}" CommandParameter="{Binding .}"/>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
             
-            <Button 
-            Text="Approve New Device"
-            Command="{Binding AppoveNewDeviceCommand}"
-            IsEnabled="True"
-            BackgroundColor="#304FFE"
-            TextColor="White"
-            BorderRadius="50"
-            Margin="10,10"
-            WidthRequest="300"
-            HeightRequest="100"/>
+            <FlexLayout Grid.Column="1" Wrap="Wrap" JustifyContent="SpaceEvenly" Margin="10,20">
+                <Button 
+                Text="Add your other devices"
+                Command="{Binding AppoveNewDeviceCommand}"
+                IsEnabled="True"
+                Style="{StaticResource CommandButtonStyle}"
+                Image="btnicon"/>
+                
+                <Button 
+                Text="Show a single endorsement"
+                Command="{Binding ShowEndorsementCommand}"
+                IsEnabled="True"
+                Style="{StaticResource CommandButtonStyle}"/>
+            
+                <Button 
+                Text="Share a list of your Endorsements"
+                Command="{Binding ShareEndorsementsCommand}"
+                IsEnabled="True"
+                Style="{StaticResource CommandButtonStyle}"/>
 
-            <Button 
-            Text="Show ID"
-            Command="{Binding ShowIDCommand}"
-            IsEnabled="True"
-            BackgroundColor="#304FFE"
-            TextColor="White"
-            BorderRadius="50"
-            Margin="10,10"
-            WidthRequest="300"
-            HeightRequest="100"/>
+                <Button 
+                Text="Accept new endorsement"
+                Command="{Binding AcceptEndorsementCommand}"
+                IsEnabled="True"
+                Style="{StaticResource CommandButtonStyle}"/>
 
-            <Button 
-            Text="Accept new endorsement"
-            Command="{Binding AcceptEndorsementCommand}"
-            IsEnabled="True"
-            BackgroundColor="#304FFE"
-            TextColor="White"
-            BorderRadius="50"
-            Margin="10,10"
-            WidthRequest="300"
-            HeightRequest="100"/>
+                <Button 
+                Text="Show your ID"
+                Command="{Binding ShowIDCommand}"
+                IsEnabled="True"
+                Style="{StaticResource CommandButtonStyle}"/>
 
-            <Button
-            Text="Verify ID"
-            Command="{Binding VerifyIDCommand}"
-            IsEnabled="True"
-            BackgroundColor="#304FFE"
-            TextColor="White"
-            BorderRadius="50"
-            Margin="10,10"
-            HeightRequest="100"/>
-
-        </StackLayout>
+                <Button
+                Text="Verify a stranger's ID"
+                Command="{Binding VerifyIDCommand}"
+                IsEnabled="True"
+                Style="{StaticResource CommandButtonStyle}"/>
+            </FlexLayout>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

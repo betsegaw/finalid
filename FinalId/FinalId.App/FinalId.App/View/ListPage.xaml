@@ -4,20 +4,17 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="FinalId.App.View.VerifiedIDInfoPage">
+             x:Class="FinalId.App.View.ListPage">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="{Binding ID}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
-            <Button 
-            Text="Verify Endorsement"
-            Command="{Binding VerifyEndorsementCommand}"
-            IsEnabled="True"
-            Style="{StaticResource BigButtonStyle}"/>
-            <Button 
-            Text="Endorse"
-            Command="{Binding EndorseCommand}"
-            IsEnabled="True"
-            Style="{StaticResource BigButtonStyle}"/>
+            <ListView x:Name="listView" SeparatorVisibility="None" ItemsSource="{Binding Items}" SelectionMode="None">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextCell Text="{Binding DisplayTitle}" Command="{Binding Path=BindingContext.SelectItemCommand, Source={x:Reference Name=listView}}" CommandParameter="{Binding .}"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
             <Button 
             Text="Done"
             Command="{Binding DoneCommand}"

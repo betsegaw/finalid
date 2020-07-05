@@ -6,6 +6,24 @@
              mc:Ignorable="d"
              x:Class="FinalId.App.App">
     <Application.Resources>
-
+        <ResourceDictionary>
+            <Style x:Key="BigButtonStyle" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="White" />
+                <Setter Property="BorderColor" Value="Black" />
+                <Setter Property="BorderWidth" Value="1"/>
+                <Setter Property="TextColor" Value="Black" />
+                <Setter Property="BorderRadius" Value="50" />
+                <Setter Property="Margin" Value="10"/>
+                <Setter Property="WidthRequest" Value="300" />
+                <Setter Property="HeightRequest" Value="100" />
+                <Setter Property="FontSize" Value="Title"/>
+            </Style>
+            <Style x:Key="CommandButtonStyle" TargetType="Button">
+                <Setter Property="ContentLayout" Value="Top,0" />
+                <Setter Property="HorizontalOptions" Value="StartAndExpand" />
+                <Setter Property="WidthRequest" Value="150" />
+            </Style>
+            
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

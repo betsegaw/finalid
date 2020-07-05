@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="FinalId.App.View.MessagePage">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="❌"
+                HorizontalOptions="CenterAndExpand"
+                FontSize="Header"
+                TextColor="Red"
+                IsVisible="{Binding IsError}"/>
+            <Label Text="✔️"
+                HorizontalOptions="CenterAndExpand"
+                FontSize="Header"
+                TextColor="Green"
+                IsVisible="{Binding IsSuccess}"/>
+            <Label Text="{Binding Message}"
+                   d:Text="This is a short message though it does go on for a little bit."
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand"
+                FontSize="Title"
+                   Margin="20,10"
+                   HorizontalTextAlignment="Center"/>
+            <Button 
+            Text="Done"
+            Command="{Binding DoneCommand}"
+            IsEnabled="True"
+            Style="{StaticResource BigButtonStyle}"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
