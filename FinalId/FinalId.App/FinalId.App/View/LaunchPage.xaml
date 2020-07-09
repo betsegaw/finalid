@@ -5,7 +5,6 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="FinalId.App.View.LaunchPage">
-
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
@@ -33,7 +32,7 @@
                 Style="{StaticResource BigButtonStyle}"
                 BackgroundColor="Green"
                 />
-        
+
             <Button
                 Text="Create a new ID"
                 Command="{Binding RequestNewIDCommand}"
@@ -43,7 +42,24 @@
                 TextColor="Black"
                 BorderColor="Gray"
                 BorderWidth="1"/>
+            <Button
+                Text="Advertise"
+                Command="{Binding AdvertiseCommand}"
+                IsEnabled="True"
+                BackgroundColor="#304FFE"
+                TextColor="White"
+                BorderRadius="50"
+                Margin="10,10"
+                HeightRequest="100"/>
+            <Button
+                Text="Scan"
+                Command="{Binding ScanCommand}"
+                IsEnabled="True"
+                BackgroundColor="#304FFE"
+                TextColor="White"
+                BorderRadius="50"
+                Margin="10,10"
+                HeightRequest="100"/>
         </StackLayout>
     </Grid>
-
 </ContentPage>

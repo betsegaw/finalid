@@ -28,6 +28,22 @@ namespace FinalId.App.ViewModel
             }
         }
 
+        public ICommand AdvertiseCommand
+        {
+            get
+            {
+                return new AsyncCommand(this.Advertise);
+            }
+        }
+
+        public ICommand ScanCommand
+        {
+            get
+            {
+                return new AsyncCommand(this.Scan);
+            }
+        }
+
         public async Task RequestNewID()
         {
             await NavigationMaster.Instance.NavigateTo(new DeviceKeyGenerationViewModel());
@@ -36,6 +52,26 @@ namespace FinalId.App.ViewModel
         public async Task GetExistingID()
         {
             await NavigationMaster.Instance.NavigateTo(new NewDeviceViewModel());
+        }
+
+        public async Task Advertise()
+        {
+            await NavigationMaster.Instance.NavigateTo(new AdvertiseViewModel());
+        }
+
+        public async Task StopAdvertisingCommand()
+        {
+            // await NavigationMaster.Instance.NavigateTo();
+        }
+
+        public async Task Scan()
+        {
+            await NavigationMaster.Instance.NavigateTo(new ScanViewModel());
+        }
+
+        public async Task ShowUuidCommand()
+        {
+            // await NavigationMaster.Instance.NavigateTo();
         }
     }
 }
