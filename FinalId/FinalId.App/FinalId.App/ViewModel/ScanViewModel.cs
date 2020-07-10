@@ -7,7 +7,7 @@ namespace FinalId.App.ViewModel
 {
     using System;
     using System.Threading.Tasks;
-    using FinalId.App.Components;
+    // using FinalId.App.Components;
     using FinalId.App.MVVMHelpers;
     using Plugin.BluetoothLE;
 
@@ -15,16 +15,39 @@ namespace FinalId.App.ViewModel
     {
         public override async Task NavigatedToAsync()
         {
-            IAdvertisementData data = null;
+            //IAdvertisementData data = null;
+
+            //// discover some devices
+            //var scanner = CrossBleAdapter.Current.Scan().Subscribe(scanResult =>
+            //{// scan for devices
+            //    // scanResult.Device.ConnectIf(config);//connect to that device if these configrations are present
+            //    data = scanResult.AdvertisementData;
+            //});
+            //// scanner.Dispose();
+            //// await NavigationMaster.Instance.NavigateTo(new AfterScanViewmodel(data.ServiceData.ToString()));
+            ///
+
+            CrossBleAdapter.Current.SetAdapterState(true);
 
             // discover some devices
-            var scanner = CrossBleAdapter.Current.Scan().Subscribe(scanResult =>
-            {// scan for devices
-                // scanResult.Device.ConnectIf(config);//connect to that device if these configrations are present
-                data = scanResult.AdvertisementData;
+            var j = CrossBleAdapter.Current.Status;
+
+            CrossBleAdapter.Current.Scan().Subscribe(scanResult =>
+            {
+                scanResult.Device.Connect();
+
+                scanResult.Device.WhenAnyCharacteristicDiscovered().Subscribe(characteristic =>
+                {
+                    // read, write, or subscribe to notifications here
+                    var result = characteristic.Read(); // use result.Data to see response
+
+                    characteristic.EnableNotifications();
+                    characteristic.WhenNotificationReceived().Subscribe(notResult =>
+                    {
+                        var t = 100;
+                    });
+                });
             });
-            scanner.Dispose();
-            await NavigationMaster.Instance.NavigateTo(new AfterScanViewmodel(data.ServiceData.ToString()));
         }
     }
 }

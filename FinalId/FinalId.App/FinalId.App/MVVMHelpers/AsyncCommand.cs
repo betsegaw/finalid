@@ -39,6 +39,10 @@ namespace FinalId.App.MVVMHelpers
                     _isExecuting = true;
                     await _execute();
                 }
+                catch (Exception e)
+                {
+                    var t = 100;
+                }
                 finally
                 {
                     _isExecuting = false;

@@ -5,13 +5,23 @@
 
 namespace FinalId.App.ViewModel
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Reactive.Linq;
+    using System.Reactive.Threading.Tasks;
+    using System.Text;
     using System.Threading.Tasks;
     using System.Windows.Input;
     using FinalId.App.Components;
     using FinalId.App.MVVMHelpers;
+    using Plugin.BluetoothLE;
+    using Plugin.BluetoothLE.Server;
 
     public class FirstTimeLaunchPageViewModel : MVVMHelpers.ViewModelBase
     {
+        private Guid guid = new Guid();
+
         public ICommand RequestNewIDCommand
         {
             get
@@ -56,7 +66,41 @@ namespace FinalId.App.ViewModel
 
         public async Task Advertise()
         {
-            await NavigationMaster.Instance.NavigateTo(new AdvertiseViewModel());
+            string publicKey = "ThisIsPublicKey";
+            //var server = CrossBleAdapter.Current.CreateGattServer();
+            var t = (await CrossBleAdapter.Current.CreateGattServer().ToList().ToTask()).ToList();
+            IGattServer server = t.First();
+            // Plugin.BluetoothLE.Server.IGattService service = new Core.ServiceImpl(server, guid, true);
+
+            server.AddService(new Guid(), true, (something) =>
+            {
+                something.AddCharacteristic(//difference between characterstic properties and gatt permissions?
+                    Guid.NewGuid(),
+                    CharacteristicProperties.Read | CharacteristicProperties.Write,
+                    GattPermissions.Read | GattPermissions.Write
+                );
+
+                var characteristic = something.Characteristics.First();
+                characteristic.WhenReadReceived().Subscribe(x =>
+                {
+                    x.Value = Encoding.UTF8.GetBytes(publicKey);
+
+                    //x.Status = GattStatus.Success;   
+                });
+                characteristic.WhenWriteReceived().Subscribe(x =>
+                {
+                    var write = Encoding.UTF8.GetString(x.Value, 0, x.Value.Length);
+                    // do something
+                });
+            });
+
+            CrossBleAdapter.Current.SetAdapterState(true);
+            //advertise the characterstic to anyone who is listening
+            CrossBleAdapter.Current.Advertiser.Start(new AdvertisementData
+            {
+                LocalName = "Public Key",
+                ServiceUuids = new List<Guid>() { guid },
+            });
         }
 
         public async Task StopAdvertisingCommand()

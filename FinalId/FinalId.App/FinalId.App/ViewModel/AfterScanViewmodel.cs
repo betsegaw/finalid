@@ -10,14 +10,12 @@ namespace FinalId.App.ViewModel
 
     public class AfterScanViewmodel : ViewModelBase
     {
-#pragma warning disable SA1401 // Fields should be private
-        public static string Data;
-#pragma warning restore SA1401 // Fields should be private
-
         public AfterScanViewmodel(string data)
         {
             Data = data;
         }
+
+        public string Data { get; private set; }
 
         public override async Task NavigatedToAsync()
         {

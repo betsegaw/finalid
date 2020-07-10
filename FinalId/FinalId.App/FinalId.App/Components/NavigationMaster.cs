@@ -31,6 +31,8 @@ namespace FinalId.App.Components
             { typeof(InputPageViewModel), typeof(InputPage) },
             { typeof(ListPageViewModel), typeof(ListPage) },
             { typeof(MessagePageViewModel), typeof(MessagePage) },
+            { typeof(ScanViewModel), typeof(LoadingPage) },
+            { typeof(AfterScanViewmodel), typeof(AfterScanPage) },
         };
 
         static NavigationMaster()
