@@ -10,6 +10,7 @@ namespace FinalId.App.ViewModel
     // using FinalId.App.Components;
     using FinalId.App.MVVMHelpers;
     using Plugin.BluetoothLE;
+    using Xamarin.Essentials;
 
     public class ScanViewModel : ViewModelBase
     {
@@ -26,6 +27,13 @@ namespace FinalId.App.ViewModel
             //// scanner.Dispose();
             //// await NavigationMaster.Instance.NavigateTo(new AfterScanViewmodel(data.ServiceData.ToString()));
             ///
+
+            var status = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
+
+            if (status != PermissionStatus.Granted)
+            {
+                await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
+            }
 
             CrossBleAdapter.Current.SetAdapterState(true);
 
