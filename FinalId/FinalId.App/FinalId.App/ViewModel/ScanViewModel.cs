@@ -6,6 +6,7 @@
 namespace FinalId.App.ViewModel
 {
     using System;
+    using System.Collections.Generic;
     using System.Threading.Tasks;
     // using FinalId.App.Components;
     using FinalId.App.MVVMHelpers;
@@ -37,22 +38,24 @@ namespace FinalId.App.ViewModel
 
             CrossBleAdapter.Current.SetAdapterState(true);
 
-            CrossBleAdapter.Current.Scan(new ScanConfig() { ScanType = BleScanType.LowLatency }).Subscribe(scanResult =>
+            CrossBleAdapter.Current.Scan(new ScanConfig() { ScanType = BleScanType.LowLatency, ServiceUuids = new List<Guid>() { new Guid("1d82f959-54d3-42d5-a8cd-3c90df6b19b6") } }).Subscribe(scanResult =>
             {
                 System.Diagnostics.Debug.WriteLine("Yay found device" + scanResult.AdvertisementData.ServiceUuids);
-                //scanResult.Device.Connect();
+                scanResult.Device.Connect();
 
-                //scanResult.Device.WhenAnyCharacteristicDiscovered().Subscribe(characteristic =>
-                //{
-                //    // read, write, or subscribe to notifications here
-                //    var result = characteristic.Read(); // use result.Data to see response
+                scanResult.Device.WhenAnyCharacteristicDiscovered().Subscribe(characteristic =>
+                {
+                    // read, write, or subscribe to notifications here
+                    var result = characteristic.Read(); // use result.Data to see response
 
-                //    characteristic.EnableNotifications();
-                //    characteristic.WhenNotificationReceived().Subscribe(notResult =>
-                //    {
-                //        var t = 100;
-                //    });
-                //});
+                    characteristic.EnableNotifications();
+                    characteristic.WhenNotificationReceived().Subscribe(notResult =>
+                    {
+                        var t = 100;
+                    });
+                });
+
+                CrossBleAdapter.Current.StopScan();
             });
         }
     }
