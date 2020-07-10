@@ -29,24 +29,22 @@ namespace FinalId.App.ViewModel
 
             CrossBleAdapter.Current.SetAdapterState(true);
 
-            // discover some devices
-            var j = CrossBleAdapter.Current.Status;
-
-            CrossBleAdapter.Current.Scan().Subscribe(scanResult =>
+            CrossBleAdapter.Current.Scan(new ScanConfig() { ScanType = BleScanType.LowLatency }).Subscribe(scanResult =>
             {
-                scanResult.Device.Connect();
+                System.Diagnostics.Debug.WriteLine("Yay found device" + scanResult.AdvertisementData.ServiceUuids);
+                //scanResult.Device.Connect();
 
-                scanResult.Device.WhenAnyCharacteristicDiscovered().Subscribe(characteristic =>
-                {
-                    // read, write, or subscribe to notifications here
-                    var result = characteristic.Read(); // use result.Data to see response
+                //scanResult.Device.WhenAnyCharacteristicDiscovered().Subscribe(characteristic =>
+                //{
+                //    // read, write, or subscribe to notifications here
+                //    var result = characteristic.Read(); // use result.Data to see response
 
-                    characteristic.EnableNotifications();
-                    characteristic.WhenNotificationReceived().Subscribe(notResult =>
-                    {
-                        var t = 100;
-                    });
-                });
+                //    characteristic.EnableNotifications();
+                //    characteristic.WhenNotificationReceived().Subscribe(notResult =>
+                //    {
+                //        var t = 100;
+                //    });
+                //});
             });
         }
     }

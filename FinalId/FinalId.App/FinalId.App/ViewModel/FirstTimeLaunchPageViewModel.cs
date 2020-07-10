@@ -7,10 +7,6 @@ namespace FinalId.App.ViewModel
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Reactive.Linq;
-    using System.Reactive.Threading.Tasks;
-    using System.Text;
     using System.Threading.Tasks;
     using System.Windows.Input;
     using FinalId.App.Components;
@@ -66,41 +62,13 @@ namespace FinalId.App.ViewModel
 
         public async Task Advertise()
         {
-            string publicKey = "ThisIsPublicKey";
-            //var server = CrossBleAdapter.Current.CreateGattServer();
-            var t = (await CrossBleAdapter.Current.CreateGattServer().ToList().ToTask()).ToList();
-            IGattServer server = t.First();
-            // Plugin.BluetoothLE.Server.IGattService service = new Core.ServiceImpl(server, guid, true);
-
-            server.AddService(new Guid(), true, (something) =>
-            {
-                something.AddCharacteristic(//difference between characterstic properties and gatt permissions?
-                    Guid.NewGuid(),
-                    CharacteristicProperties.Read | CharacteristicProperties.Write,
-                    GattPermissions.Read | GattPermissions.Write
-                );
-
-                var characteristic = something.Characteristics.First();
-                characteristic.WhenReadReceived().Subscribe(x =>
-                {
-                    x.Value = Encoding.UTF8.GetBytes(publicKey);
-
-                    //x.Status = GattStatus.Success;   
-                });
-                characteristic.WhenWriteReceived().Subscribe(x =>
-                {
-                    var write = Encoding.UTF8.GetString(x.Value, 0, x.Value.Length);
-                    // do something
-                });
-            });
-
-            CrossBleAdapter.Current.SetAdapterState(true);
-            //advertise the characterstic to anyone who is listening
             CrossBleAdapter.Current.Advertiser.Start(new AdvertisementData
             {
-                LocalName = "Public Key",
-                ServiceUuids = new List<Guid>() { guid },
+                LocalName = "TestServer",
+                ServiceUuids = new List<Guid> { new Guid("123e4567-e89b-12d3-a456-426614174000") },
             });
+
+            //CrossBleAdapter.Current.Advertiser.Stop();
         }
 
         public async Task StopAdvertisingCommand()
