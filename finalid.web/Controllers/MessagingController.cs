@@ -20,14 +20,14 @@ namespace FinalId.Web.Controllers
         
         // http://localhost:5000/Messaging/123
         [HttpGet("{recipient}")]
-        public IEnumerable<Message> Get(string recipient)
+        public IEnumerable<Message> GetAllMessages(string recipient)
         {
             return new List<Message>() { new Message() { EncryptedContent = "yo" , Signature = "ni" }};
         }
 
         // http://localhost:5000/Messaging/123
         [HttpPost("{recipient}")]
-        public void Set(string recipient, Message message)
+        public void SendMessage(string recipient, Message message)
         {
             System.Diagnostics.Debug.WriteLine(message);
         }
