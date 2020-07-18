@@ -1,6 +1,6 @@
 using System;
 
-namespace finalid.web
+namespace FinalId.Web
 {
     public class WeatherForecast
     {
