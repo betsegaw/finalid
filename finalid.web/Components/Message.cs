@@ -1,5 +1,4 @@
-using System;
-
+using Newtonsoft.Json;
 
 namespace FinalId.Web.Components
 {
@@ -13,7 +12,7 @@ namespace FinalId.Web.Components
 
         public override string ToString() 
         {
-            
+           return JsonConvert.SerializeObject(this);
         }
     }
 }

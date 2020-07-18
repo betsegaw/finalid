@@ -18,13 +18,14 @@ namespace FinalId.Web.Controllers
         }
 
         
-        // https://localhost:5001/Messaging/123
+        // http://localhost:5000/Messaging/123
         [HttpGet("{recipient}")]
         public IEnumerable<Message> Get(string recipient)
         {
             return new List<Message>() { new Message() { EncryptedContent = "yo" , Signature = "ni" }};
         }
 
+        // http://localhost:5000/Messaging/123
         [HttpPost("{recipient}")]
         public void Set(string recipient, Message message)
         {
