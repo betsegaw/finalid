@@ -1,10 +1,10 @@
 using System;
 
-namespace FinalId.Components.Web
+namespace FinalId.Web.Components
 {
-    public class WeatherForecast
+    public class Message
     {
-        public string Message { get; set; }
+        public string EncryptedContent { get; set; }
 
         public string SenderPublicKey { get; set; }
 
