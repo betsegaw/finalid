@@ -494,4 +494,4 @@ MigrationBackup/
 
 # End of https://www.gitignore.io/api/dotnetcore,aspnetcore,visualstudio,xamarinstudio
 
-sloppy.exe
+doctl.exe
