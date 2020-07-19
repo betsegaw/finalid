@@ -16,7 +16,7 @@ namespace FinalId.Web.Controllers
         const int MaximumMessagePerRecipient = 4;
         const int MessageRetentionInMinutes = 10;
         private readonly ILogger<MessagingController> _logger;
-        private ConnectionMultiplexer redis = ConnectionMultiplexer.Connect("redis");
+        private ConnectionMultiplexer redis = ConnectionMultiplexer.Connect("redis.database.finalid");
         
         public MessagingController(ILogger<MessagingController> logger)
         {
