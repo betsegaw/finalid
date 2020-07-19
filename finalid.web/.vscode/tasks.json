@@ -71,12 +71,11 @@
             },
             "args": [
                 "up",
-                "-d",
                 "--build"
             ]
         },
         {
-            "label": "Stop Local Dev Server",
+            "label": "Clear Local Dev Server",
             "command": "docker-compose",
             "type": "shell",
             "options": {
