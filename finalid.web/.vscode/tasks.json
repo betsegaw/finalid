@@ -37,6 +37,24 @@
                 "/consoleloggerparameters:NoSummary"
             ],
             "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "Start Local Prod Server",
+            "command": "docker-compose",
+            "type": "shell",
+            "args": [
+                "up",
+                "-d",
+                "--build"
+            ]
+        },
+        {
+            "label": "Stop Local Prod Server",
+            "command": "docker-compose",
+            "type": "shell",
+            "args": [
+                "down"
+            ]
         }
     ]
 }
