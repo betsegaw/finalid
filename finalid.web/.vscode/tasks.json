@@ -42,6 +42,9 @@
             "label": "Start Local Prod Server",
             "command": "docker-compose",
             "type": "shell",
+            "options": {
+                "cwd": "${workspaceFolder}/docker/Prod/."
+            },
             "args": [
                 "up",
                 "-d",
@@ -52,6 +55,9 @@
             "label": "Stop Local Prod Server",
             "command": "docker-compose",
             "type": "shell",
+            "options": {
+                "cwd": "${workspaceFolder}/docker/Prod/."
+            },
             "args": [
                 "down"
             ]

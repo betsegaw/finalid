@@ -1,7 +1,9 @@
 version: '2.1'
 services:
   web:
-    build: .
+    build:
+      context: ../../.
+      dockerfile: ./docker/Prod/Dockerfile
     ports:
     - "80:80"
     volumes:
