@@ -27,7 +27,17 @@ namespace FinalId.Web.Controllers
         public IEnumerable<Message> GetAllMessages(string recipient)
         {
             IDatabase db = redis.GetDatabase();
-            return new List<Message>() { JsonConvert.DeserializeObject<Message>(db.StringGet(recipient)) };
+
+            var message = db.StringGet(recipient);
+
+            if (message != RedisValue.Null)
+            {
+                return new List<Message>() { JsonConvert.DeserializeObject<Message>(db.StringGet(recipient)) };
+            }
+            else
+            {
+                return new List<Message>();
+            }
         }
 
         // http://localhost:5000/Messaging/123
