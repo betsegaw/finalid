@@ -1,8 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using FinalId.Web.Components;
+using StackExchange.Redis;
 
 namespace FinalId.Web.Controllers
 {
@@ -11,7 +14,8 @@ namespace FinalId.Web.Controllers
     public class MessagingController : ControllerBase
     {
         private readonly ILogger<WeatherForecastController> _logger;
-
+        private ConnectionMultiplexer redis = ConnectionMultiplexer.Connect("redis");
+        
         public MessagingController(ILogger<WeatherForecastController> logger)
         {
             _logger = logger;
@@ -22,14 +26,16 @@ namespace FinalId.Web.Controllers
         [HttpGet("{recipient}")]
         public IEnumerable<Message> GetAllMessages(string recipient)
         {
-            return new List<Message>() { new Message() { EncryptedContent = "yo" , Signature = "ni" }};
+            IDatabase db = redis.GetDatabase();
+            return new List<Message>() { JsonConvert.DeserializeObject<Message>(db.StringGet(recipient)) };
         }
 
         // http://localhost:5000/Messaging/123
         [HttpPost("{recipient}")]
         public void SendMessage(string recipient, Message message)
         {
-            System.Diagnostics.Debug.WriteLine(message);
+            IDatabase db = redis.GetDatabase();
+            db.StringSet(recipient, message.ToString());
         }
     }
 }
