@@ -9,8 +9,8 @@ services:
     - logvolume01:/var/log
     links:
     - redis
-    command: [ "dotnet", "watch", "run", "/code/finalid.web.csproj" ]
-    # command: dir /code/
+    working_dir: /code
+    command: dotnet watch run --urls http://0.0.0.0:5000
   redis:
     image: redis
 volumes:
