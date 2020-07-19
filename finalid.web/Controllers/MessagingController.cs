@@ -13,10 +13,10 @@ namespace FinalId.Web.Controllers
     [Route("[controller]")]
     public class MessagingController : ControllerBase
     {
-        private readonly ILogger<WeatherForecastController> _logger;
+        private readonly ILogger<MessagingController> _logger;
         private ConnectionMultiplexer redis = ConnectionMultiplexer.Connect("redis");
         
-        public MessagingController(ILogger<WeatherForecastController> logger)
+        public MessagingController(ILogger<MessagingController> logger)
         {
             _logger = logger;
         }
@@ -28,11 +28,11 @@ namespace FinalId.Web.Controllers
         {
             IDatabase db = redis.GetDatabase();
 
-            var message = db.StringGet(recipient);
+            var messages = db.ListRange(recipient).Select(x =>  JsonConvert.DeserializeObject<Message>(x));
 
-            if (message != RedisValue.Null)
+            if (messages.Count() != 0)
             {
-                return new List<Message>() { JsonConvert.DeserializeObject<Message>(db.StringGet(recipient)) };
+                return messages;
             }
             else
             {
@@ -45,7 +45,9 @@ namespace FinalId.Web.Controllers
         public void SendMessage(string recipient, Message message)
         {
             IDatabase db = redis.GetDatabase();
-            db.StringSet(recipient, message.ToString());
+            // db.StringSet(recipient, message.ToString());
+
+            var messages = db.ListLeftPush(recipient, message.ToString());
         }
     }
 }
