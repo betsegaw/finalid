@@ -1,16 +1,16 @@
 version: '2.1'
 services:
   web:
-    build:
-      context: ../../.
-      dockerfile: ./docker/Prod/Dockerfile
+    image: mcr.microsoft.com/dotnet/core/sdk:3.1
     ports:
-    - "80:80"
+    - "5000:5000"
     volumes:
-    - .:/code
+    - ../../.:/code
     - logvolume01:/var/log
     links:
     - redis
+    command: [ "dotnet", "watch", "run", "/code/finalid.web.csproj" ]
+    # command: dir /code/
   redis:
     image: redis
 volumes:
