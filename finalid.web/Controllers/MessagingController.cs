@@ -13,7 +13,7 @@ namespace FinalId.Web.Controllers
     [Route("[controller]")]
     public class MessagingController : ControllerBase
     {
-        const int MaximumMessagePerRecipient = 100;
+        const int MaximumMessagePerRecipient = 4;
         const int MessageRetentionInMinutes = 10;
         private readonly ILogger<MessagingController> _logger;
         private ConnectionMultiplexer redis = ConnectionMultiplexer.Connect("redis");
@@ -41,7 +41,7 @@ namespace FinalId.Web.Controllers
         {
             IDatabase db = redis.GetDatabase();
             
-            db.ListLeftPush(recipient, message.ToString());
+            db.ListRightPush(recipient, message.ToString());
             // Expire key after 10 minutes
             db.KeyExpire(recipient, new TimeSpan(0, MessageRetentionInMinutes, 0));
 
