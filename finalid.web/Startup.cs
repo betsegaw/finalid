@@ -36,11 +36,6 @@ namespace FinalId.Web
                 app.UseDeveloperExceptionPage();
             }
 
-            if (!env.IsDevelopment())
-            {
-                app.UseHttpsRedirection();
-            }
-
             app.UseRouting();
 
             app.UseAuthorization();
