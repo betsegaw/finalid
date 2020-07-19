@@ -7,6 +7,6 @@ services:
     ports:
     - "80:80"
     links:
-    - redis
+    - redis.database.finalid
   redis.database.finalid:
     image: redis
