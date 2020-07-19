@@ -1,4 +1,5 @@
 version: '2.1'
+project: 'finalid' # added to work with sloppy.io
 services:
   web:
     build:
@@ -6,12 +7,7 @@ services:
       dockerfile: ./docker/Prod/Dockerfile
     ports:
     - "80:80"
-    volumes:
-    - .:/code
-    - logvolume01:/var/log
     links:
     - redis
   redis:
     image: redis
-volumes:
-  logvolume01: {}
