@@ -13,6 +13,8 @@ namespace FinalId.Web.Controllers
     [Route("[controller]")]
     public class MessagingController : ControllerBase
     {
+        const int MaximumMessagePerRecipient = 100;
+        const int MessageRetentionInMinutes = 10;
         private readonly ILogger<MessagingController> _logger;
         private ConnectionMultiplexer redis = ConnectionMultiplexer.Connect("redis");
         
@@ -41,14 +43,14 @@ namespace FinalId.Web.Controllers
             
             db.ListLeftPush(recipient, message.ToString());
             // Expire key after 10 minutes
-            db.KeyExpire(recipient, new TimeSpan(0,10,0));
+            db.KeyExpire(recipient, new TimeSpan(0, MessageRetentionInMinutes, 0));
 
             // Trim down number of messages to a maximum of 100 latest messages
             var count = db.ListRange(recipient).Count();
 
-            if (count > 100)
+            if (count > MaximumMessagePerRecipient)
             {
-                db.ListTrim(recipient, count - 100, - 1);
+                db.ListTrim(recipient, count - MaximumMessagePerRecipient, - 1);
             }
         }
     }
