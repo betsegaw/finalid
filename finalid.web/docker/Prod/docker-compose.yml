@@ -1,5 +1,4 @@
 version: '2.1'
-project: 'finalid' # added to work with sloppy.io
 services:
   web:
     build:
