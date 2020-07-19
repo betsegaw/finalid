@@ -30,14 +30,7 @@ namespace FinalId.Web.Controllers
 
             var messages = db.ListRange(recipient).Select(x =>  JsonConvert.DeserializeObject<Message>(x));
 
-            if (messages.Count() != 0)
-            {
-                return messages;
-            }
-            else
-            {
-                return new List<Message>();
-            }
+            return messages;
         }
 
         // http://localhost:5000/Messaging/123
