@@ -45,9 +45,18 @@ namespace FinalId.Web.Controllers
         public void SendMessage(string recipient, Message message)
         {
             IDatabase db = redis.GetDatabase();
-            // db.StringSet(recipient, message.ToString());
+            
+            db.ListLeftPush(recipient, message.ToString());
+            // Expire key after 10 minutes
+            db.KeyExpire(recipient, new TimeSpan(0,10,0));
 
-            var messages = db.ListLeftPush(recipient, message.ToString());
+            // Trim down number of messages to a maximum of 100 latest messages
+            var count = db.ListRange(recipient).Count();
+
+            if (count > 100)
+            {
+                db.ListTrim(recipient, count - 100, - 1);
+            }
         }
     }
 }
