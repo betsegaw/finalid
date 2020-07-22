@@ -35,6 +35,18 @@ namespace FinalId.Web.Controllers
             return messages;
         }
 
+        
+        // http://localhost:5000/Messaging/123/456
+        [HttpGet("{recipient}/{user}")]
+        public IEnumerable<Message> GetMessageFromUser(string recipient, string user)
+        {
+            IDatabase db = redis.GetDatabase();
+
+            var messages = db.ListRange(recipient).Select(x =>  JsonConvert.DeserializeObject<Message>(x));
+
+            return messages.Where(x => x.SenderPublicKey == user);
+        }
+
         // http://localhost:5000/Messaging/123
         [HttpPost("{recipient}")]
         public void SendMessage(string recipient, Message message)
