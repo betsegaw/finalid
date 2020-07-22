@@ -1,0 +1,17 @@
+version: '2.1'
+services:
+  web:
+    image: mcr.microsoft.com/dotnet/core/sdk:3.1
+    ports:
+    - "5000:5000"
+    volumes:
+    - ../../.:/code
+    - logvolume01:/var/log
+    links:
+    - redis.database.finalid
+    working_dir: /code
+    command: dotnet watch run --configuration Debug --urls http://0.0.0.0:5000
+  redis.database.finalid:
+    image: redis
+volumes:
+  logvolume01: {}

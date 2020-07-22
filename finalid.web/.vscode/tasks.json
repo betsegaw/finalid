@@ -1,0 +1,89 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/finalid.web.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "publish",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "publish",
+                "${workspaceFolder}/finalid.web.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "watch",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "watch",
+                "run",
+                "${workspaceFolder}/finalid.web.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "Start Local Prod Server",
+            "command": "docker-compose",
+            "type": "shell",
+            "options": {
+                "cwd": "${workspaceFolder}/docker/Prod/."
+            },
+            "args": [
+                "up",
+                "-d",
+                "--build"
+            ]
+        },
+        {
+            "label": "Stop Local Prod Server",
+            "command": "docker-compose",
+            "type": "shell",
+            "options": {
+                "cwd": "${workspaceFolder}/docker/Prod/."
+            },
+            "args": [
+                "down"
+            ]
+        },
+        {
+            "label": "Start Local Dev Server",
+            "command": "docker-compose",
+            "type": "shell",
+            "options": {
+                "cwd": "${workspaceFolder}/docker/Dev/."
+            },
+            "args": [
+                "up",
+                "--build"
+            ]
+        },
+        {
+            "label": "Clear Local Dev Server",
+            "command": "docker-compose",
+            "type": "shell",
+            "options": {
+                "cwd": "${workspaceFolder}/docker/Dev/."
+            },
+            "args": [
+                "down"
+            ]
+        }
+    ]
+}
